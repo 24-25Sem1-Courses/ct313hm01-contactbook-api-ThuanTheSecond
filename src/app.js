@@ -8,7 +8,7 @@ const {
   resourceNotFound,
   handleError,
 } = require("./controllers/errors.controller");
-
+const { specs, swaggerUi } = require("./docs/swagger");
 const app = express();
 
 app.use(cors());
@@ -20,6 +20,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/public", express.static("public"));
+
+// run api-docs
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 contactsRouter.setup(app);
 
 // handle the 404 error
